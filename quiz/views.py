@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Question
+from .models import Question as QuestionModal
 from .serializers import RandomQuestionSerializer, QuestionSerializer, QuestionSerializerPost, AnswersSerializerPost
 from rest_framework.views import APIView
 from rest_framework import status
@@ -9,12 +9,12 @@ from rest_framework.response import Response
 class Quiz(generics.ListAPIView):
 
     serializer_class = RandomQuestionSerializer
-    queryset = Question.objects.all()
+    queryset = QuestionModal.objects.all()
 
 class RandomQuestion(APIView):
 
     def get(self, request, format=None, **kwargs):
-        question = Question.objects.filter().order_by('?')[:1]
+        question = QuestionModal.objects.all().order_by('?')[:1]
         serializer = RandomQuestionSerializer(question, many=True)
         return Response(serializer.data)
 
